@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+
+# Environment variables
+.env
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Railway & IDE related
+.env.local
+.env.development
+.env.production
+.idea/
+.vscode/
+
+# Build artifacts (if any)
+dist/
+build/

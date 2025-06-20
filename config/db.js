@@ -1,0 +1,19 @@
+const mysql=require('mysql2')
+const dotenv=require('dotenv')
+
+dotenv.config()
+
+const db=mysql.createConnection({
+    connectionLimit: 10,
+     host: 'localhost', 
+    user:process.env.DB_USER,
+    password:process.env.DB_PASS,
+    database:process.env.DB_NAME
+})
+
+db.connect(err=>{
+    if(err) throw err
+    console.log("db connected")
+})
+
+module.exports=db
