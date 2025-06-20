@@ -1,19 +1,31 @@
-const mysql=require('mysql2')
-const dotenv=require('dotenv')
+const mysql = require('mysql2');
+const dotenv = require('dotenv');
+const { URL } = require('url');
 
-dotenv.config()
+dotenv.config();
 
-const db=mysql.createConnection({
-    connectionLimit: 10,
-     host: 'localhost', 
-    user:process.env.DB_USER,
-    password:process.env.DB_PASS,
-    database:process.env.DB_NAME
-})
+const dbUrl = process.env.MYSQL_URL;
 
-db.connect(err=>{
-    if(err) throw err
-    console.log("db connected")
-})
+if (!dbUrl) {
+  throw new Error('MYSQL_URL is not defined in environment variables');
+}
 
-module.exports=db
+const parsed = new URL(dbUrl);
+
+const db = mysql.createConnection({
+  host: parsed.hostname,
+  user: parsed.username,
+  password: parsed.password,
+  database: parsed.pathname.replace('/', ''),
+  port: parsed.port,
+});
+
+db.connect((err) => {
+  if (err) {
+    console.error('Database connection failed:', err);
+    throw err;
+  }
+  console.log('✅ DB connected to Railway MySQL');
+});
+
+module.exports = db;
