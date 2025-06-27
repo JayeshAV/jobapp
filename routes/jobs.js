@@ -12,4 +12,4 @@ router.delete("/job/:id",verifyToken,allowroles('admin'),deleteJob)
 router.put("/updatejob/:id",verifyToken,allowroles('admin'),UpdateJob)
 
 
-module.exports=router
+module.exports=router   
